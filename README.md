@@ -1,6 +1,6 @@
 # weatherapp
 
-The app s have a search bar where users can enter a location (city) to get weather information.
+The app have a search bar where users can enter a location (city) to get weather information.
 Upon submitting a search query, the app should display the current weather conditions including temperature, weather description, humidity, wind speed, etc.
 it also display a 5-day forecast with the date, weather icon, and temperature for each day.
 
