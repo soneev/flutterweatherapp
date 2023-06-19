@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
+import '../managers/api/api_exception.dart';
 import '../managers/api/api_key.dart';
 import '../managers/api/fetch_weather.dart';
 import 'package:http/http.dart' as http;
@@ -53,18 +55,7 @@ class GlobalController extends GetxController   {
   Future<void> getSearchData() async {
     http.Response response;
     try {
-      // response = await http.get(
-      //   Uri.parse(
-
-      //       // "https://api.openweathermap.org/data/2.5/weather?q=${searchController.value.text}&appid=$apiKey"
-            // "https://api.openweathermap.org/data/2.5/weather?q=${searchController.value.text}&appid=$apiKey&units=metric"),
-           
-            
-      //   headers: {
-      //     'content-Type': 'application/json',
-      //   },
-   
-      // );
+     
       var url=Uri.http('api.openweathermap.org', 'data/2.5/weather', {'q': searchController.value.text,
       'appid':apiKey,'units':'metric'
       });
@@ -78,12 +69,10 @@ class GlobalController extends GetxController   {
             SearchLocationModel.fromJson(jsonDecode(response.body));
         searchActive.value = true;
         print("24424242466${getSearchjsonData.toJson()}");
-      } else {
-        print("api call failed");
       }
-    } catch (e) {
-      print(e.toString());
-    }
+    } on SocketException {
+      throw NoNetworkException();
+  }
   }
 
   getLocation() async {
